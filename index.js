@@ -16,5 +16,4 @@ app.get("/", (req, res) => {
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("App listenong to 5000 port");
-  console.log(process.env);
 });
