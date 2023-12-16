@@ -25,8 +25,9 @@ const movieArr = [
   },
 ];
 
+const modifyMovieArray = require("../utils/modifyMovieArray");
 module.exports = {
   recent: async (req, res) => {
-    res.send(movieArr);
+    res.send(modifyMovieArray(movieArr));
   },
 };
