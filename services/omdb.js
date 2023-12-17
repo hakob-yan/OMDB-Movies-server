@@ -21,4 +21,12 @@ module.exports = {
       return [];
     }
   },
+  getMovieById: async (movieId) => {
+    const response = await axios.get(`${OMDB_API}&i=${movieId}`);
+    if (response.data && response.data.Response === "True") {
+      return response.data;
+    } else {
+      return null;
+    }
+  },
 };

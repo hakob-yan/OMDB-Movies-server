@@ -1,4 +1,7 @@
-const modifyMovieArray = require("../utils/modifyMovieArray");
+const {
+  modifyMovieArray,
+  modifyFoundMovie,
+} = require("../utils/modifyMovieArray");
 
 const omdb = require("../services/omdb");
 module.exports = {
@@ -16,6 +19,18 @@ module.exports = {
       const { title } = req.query;
       const searchedMovies = await omdb.getMoviesByTitle(title || "");
       res.status(200).send(modifyMovieArray(searchedMovies));
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  },
+  getMovieById: async (req, res) => {
+    try {
+      const { movieId } = req.params;
+      const foundMovie = await omdb.getMovieById(movieId || "");
+      res
+        .status(200)
+        .send(foundMovie ? modifyFoundMovie(foundMovie) : foundMovie);
     } catch (error) {
       console.log(error);
       res.sendStatus(500);
