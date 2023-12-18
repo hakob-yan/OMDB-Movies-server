@@ -36,4 +36,17 @@ module.exports = {
       res.sendStatus(500);
     }
   },
+
+  deleteMovieById: async (req, res) => {
+    try {
+      const { movieId } = req.params;
+      const foundMovie = await omdb.getMovieById(movieId || "");
+      res
+        .status(200)
+        .send(foundMovie ? modifyFoundMovie(foundMovie) : foundMovie);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  },
 };
