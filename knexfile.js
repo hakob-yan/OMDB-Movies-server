@@ -1,6 +1,5 @@
 require("dotenv").config();
 // knexfile.js
-console.log(process.env.DB_HOST);
 module.exports = {
   client: "pg",
 

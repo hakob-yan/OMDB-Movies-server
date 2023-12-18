@@ -13,7 +13,7 @@ exports.seed = async function (knex) {
     const response = await axios.get(`${OMDB_API}&s=top`);
     const movies = response.data.Search;
     const moviesData = await Promise.all(
-      movies.slice(0, 10).map((el) => {
+      movies.slice(0, 20).map((el) => {
         return omdb.getMovieById(el.imdbID || "");
       })
     );
