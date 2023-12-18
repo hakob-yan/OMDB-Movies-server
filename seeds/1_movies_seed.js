@@ -2,6 +2,7 @@ const { default: axios } = require("axios");
 const omdb = require("../services/omdb");
 const { OMDB_API } = require("../constants");
 const { modifyMovieArray } = require("../utils/modifyMovieArray");
+const modifyOmdbMovie = require("../utils/modifyOmdbMovie");
 
 /**
  * @param { import("knex").Knex } knex
@@ -17,19 +18,12 @@ exports.seed = async function (knex) {
         return omdb.getMovieById(el.imdbID || "");
       })
     );
-    const finalMoviesData = moviesData.map((el) => ({
-      title: el.Title || "",
-      year: el.Year || "",
-      runtime: el.Runtime || "",
-      genre: el.Genre || "",
-      director: el.Director || "",
-      image: el.iamge || "",
-      imdb_id: el.imdbID || "",
-      is_favorite: true,
-      is_deleted: false,
-      user_id: 3,
-    }));
-    await knex("movies").insert(finalMoviesData);
+    const insertMovies = (userId) =>
+      moviesData.map((el) => modifyOmdbMovie(el, userId));
+
+    await Promise.all(
+      [1, 2, 3].map((el) => knex("movies").insert(insertMovies(el)))
+    );
   } catch (error) {
     console.log(error);
   }
