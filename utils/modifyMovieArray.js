@@ -3,10 +3,10 @@ module.exports = {
     return arr.map((movie) => ({
       title: movie.Title,
       year: movie.Year,
-      imdbID: movie.imdbID,
+      imdb_id: movie.imdbID,
       type: movie.Type,
       image: movie.Poster,
-      isFavorite: false,
+      is_favorite: false,
     }));
   },
   modifyFoundMovie: (movie) => {
@@ -18,7 +18,6 @@ module.exports = {
       director: movie.Director,
       image: movie.Poster,
       runtime: movie.Runtime,
-
     };
   },
 };

@@ -5,7 +5,7 @@ module.exports = (el, userId) => {
     runtime: el.Runtime || "",
     genre: el.Genre || "",
     director: el.Director || "",
-    image: el.iamge || "",
+    image: el.Poster || "",
     imdb_id: el.imdbID || "",
     is_favorite: true,
     is_deleted: false,

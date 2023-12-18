@@ -1,7 +1,6 @@
 const { default: axios } = require("axios");
 const omdb = require("../services/omdb");
 const { OMDB_API } = require("../constants");
-const { modifyMovieArray } = require("../utils/modifyMovieArray");
 const modifyOmdbMovie = require("../utils/modifyOmdbMovie");
 
 /**

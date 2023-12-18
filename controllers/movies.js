@@ -7,10 +7,14 @@ const { pool } = require("../configs/db");
 const omdb = require("../services/omdb");
 const modifyOmdbMovie = require("../utils/modifyOmdbMovie");
 module.exports = {
-  getRecentMovies: async (req, res) => {
+  getAllMovies: async (req, res) => {
     try {
-      const recentMovies = await omdb.getRecents();
-      res.status(200).send(modifyMovieArray(recentMovies));
+      const userId = req.headers.authorization || "";
+      const dbMovies = await pool.query(
+        `SELECT * FROM movies WHERE user_id = $1`,
+        [userId]
+      );
+      res.status(200).send(dbMovies.rows.filter((el) => !el.is_deleted) || []);
     } catch (error) {
       console.log(error);
       res.sendStatus(500);
@@ -30,7 +34,7 @@ module.exports = {
       if (dbMoviesRows.length) {
         const finalMoviedata = modifiedMovies.filter((movie) => {
           return !dbMoviesRows.some(
-            (el) => el.imdb_id === movie.imdbID && el.is_deleted === true
+            (el) => el.imdb_id === movie.imdb_id && el.is_deleted === true
           );
         });
         res.status(200).send(finalMoviedata);
