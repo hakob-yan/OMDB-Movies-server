@@ -1,13 +1,22 @@
-// migrations/20220101000000_migration_name.js
-
 exports.up = function (knex) {
-  return knex.schema.createTable("example_table", function (table) {
-    // table.increments("id").primary();
-    // table.string("column_name");
-    // // Add other columns as needed
-  });
+  return knex.schema
+    .createTable("users", function (table) {
+      table.increments("id").primary();
+      table.string("name").notNullable();
+    })
+    .createTable("movies", function (table) {
+      table.increments("id").primary();
+      table.string("title").notNullable();
+      table.string("year").notNullable();
+      table.string("runtime").notNullable();
+      table.string("genre").notNullable();
+      table.string("director").notNullable();
+      table.boolean("is_favorite").defaultTo(false);
+      table.boolean("is_deleted").defaultTo(false);
+      table.integer("user_id").unsigned().references("id").inTable("users");
+    });
 };
 
 exports.down = function (knex) {
-  return knex.schema.dropTable("example_table");
+  return knex.schema.dropTable("users").dropTable("movies");
 };
