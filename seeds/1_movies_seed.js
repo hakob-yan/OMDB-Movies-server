@@ -17,7 +17,6 @@ exports.seed = async function (knex) {
         return omdb.getMovieById(el.imdbID || "");
       })
     );
-
     const finalMoviesData = moviesData.map((el) => ({
       title: el.Title || "",
       year: el.Year || "",
@@ -25,6 +24,7 @@ exports.seed = async function (knex) {
       genre: el.Genre || "",
       director: el.Director || "",
       image: el.iamge || "",
+      imdb_id: el.imdbID || "",
       is_favorite: true,
       is_deleted: false,
       user_id: 3,

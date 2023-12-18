@@ -2,6 +2,7 @@ const {
   modifyMovieArray,
   modifyFoundMovie,
 } = require("../utils/modifyMovieArray");
+const { pool } = require("../configs/db");
 
 const omdb = require("../services/omdb");
 module.exports = {
@@ -39,11 +40,16 @@ module.exports = {
 
   deleteMovieById: async (req, res) => {
     try {
+      const userId = req.headers.authorization || "";
       const { movieId } = req.params;
-      const foundMovie = await omdb.getMovieById(movieId || "");
-      res
-        .status(200)
-        .send(foundMovie ? modifyFoundMovie(foundMovie) : foundMovie);
+      const movie = await omdb.getMovieById(movieId || "");
+
+      console.log(0, userId, movieId);
+      const userMovie = await pool.query(
+        "SELECT * FROM movies WHERE user_id = $1 AND imdb_id = $2",
+        [userId, movieId]
+      );
+      await res.status(204).send("movie deleted");
     } catch (error) {
       console.log(error);
       res.sendStatus(500);

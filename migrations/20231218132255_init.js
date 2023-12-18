@@ -7,6 +7,7 @@ exports.up = function (knex) {
     table.string("genre").notNullable();
     table.string("director").notNullable();
     table.string("image").notNullable();
+    table.string("imdb_id").notNullable();
     table.boolean("is_favorite").defaultTo(false);
     table.boolean("is_deleted").defaultTo(false);
     table.integer("user_id").unsigned().references("id").inTable("users");
