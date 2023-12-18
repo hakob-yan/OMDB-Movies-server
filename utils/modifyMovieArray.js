@@ -6,6 +6,7 @@ module.exports = {
       imdbID: movie.imdbID,
       type: movie.Type,
       image: movie.Poster,
+      isFavorite: false,
     }));
   },
   modifyFoundMovie: (movie) => {
@@ -14,7 +15,7 @@ module.exports = {
       year: movie.Year,
       imdbID: movie.imdbID,
       genre: movie.Genre,
-      director:movie.Director,
+      director: movie.Director,
       image: movie.Poster,
       runtime: movie.Runtime,
 
