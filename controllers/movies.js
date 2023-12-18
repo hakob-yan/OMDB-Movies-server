@@ -19,8 +19,24 @@ module.exports = {
   getMoviesByTitle: async (req, res) => {
     try {
       const { title } = req.query;
+      const userId = req.headers.authorization || "";
       const searchedMovies = await omdb.getMoviesByTitle(title || "");
-      res.status(200).send(modifyMovieArray(searchedMovies));
+      const modifiedMovies = modifyMovieArray(searchedMovies);
+      const dbMovies = await pool.query(
+        `SELECT * FROM movies WHERE user_id = $1`,
+        [userId]
+      );
+      const dbMoviesRows = dbMovies.rows || [];
+      if (dbMoviesRows.length) {
+        const finalMoviedata = modifiedMovies.filter((movie) => {
+          return !dbMoviesRows.some(
+            (el) => el.imdb_id === movie.imdbID && el.is_deleted === true
+          );
+        });
+        res.status(200).send(finalMoviedata);
+      } else {
+        res.status(200).send(modifiedMovies);
+      }
     } catch (error) {
       console.log(error);
       res.sendStatus(500);
