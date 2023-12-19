@@ -7,7 +7,7 @@ module.exports = (el, userId) => {
     director: el.Director || "",
     image: el.Poster || "",
     imdb_id: el.imdbID || "",
-    is_favorite: true,
+    is_favorite: false,
     is_deleted: false,
     user_id: userId,
   };
