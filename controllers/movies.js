@@ -177,7 +177,7 @@ module.exports = {
         director,
         imageSRC,
         new Date(),
-        true,
+        false,
         false,
         userId,
       ];
