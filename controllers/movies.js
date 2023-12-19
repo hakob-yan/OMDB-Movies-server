@@ -123,7 +123,7 @@ module.exports = {
             runtime || foundMovie.runtime,
             genre || foundMovie.genre,
             director || foundMovie.director,
-            is_favorite !== undefined || foundMovie.is_favorite,
+            is_favorite !== undefined ? is_favorite : foundMovie.is_favorite,
           ]
         );
         res.status(200).send(updateMovie.rows[0]);
@@ -138,7 +138,7 @@ module.exports = {
           director || modifiedMovie.director,
           modifiedMovie.image,
           modifiedMovie.imdb_id,
-          is_favorite !== undefined || modifiedMovie.is_favorite,
+          is_favorite !== undefined ? is_favorite : foundMovie.is_favorite,
           modifiedMovie.is_deleted,
           userId,
         ];
