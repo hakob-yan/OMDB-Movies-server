@@ -163,4 +163,33 @@ module.exports = {
       res.sendStatus(500);
     }
   },
+  addMovie: async (req, res) => {
+    try {
+      const userId = req.headers.authorization || "";
+      const { title, year, runtime, genre, director } = req.body;
+      const imageSRC =
+        "https://thesmartlocal.my/wp-content/uploads/2023/01/new-movies-in-2023-ant-man-and-the-wasp-quantumania.jpg";
+      const args = [
+        title,
+        year,
+        runtime,
+        genre,
+        director,
+        imageSRC,
+        new Date(),
+        true,
+        false,
+        userId,
+      ];
+
+      const newMovie = await pool.query(
+        `INSERT INTO movies (title, year, runtime, genre, director, image, imdb_id, is_favorite, is_deleted, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9, $10) RETURNING *`,
+        args
+      );
+      res.status(200).send(newMovie.rows[0]);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  },
 };
