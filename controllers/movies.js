@@ -6,6 +6,7 @@ const { pool } = require("../configs/db");
 
 const omdb = require("../services/omdb");
 const modifyOmdbMovie = require("../utils/modifyOmdbMovie");
+const { imageSRC } = require("../constants");
 module.exports = {
   getAllMovies: async (req, res) => {
     try {
@@ -167,8 +168,7 @@ module.exports = {
     try {
       const userId = req.headers.authorization || "";
       const { title, year, runtime, genre, director } = req.body;
-      const imageSRC =
-        "https://thesmartlocal.my/wp-content/uploads/2023/01/new-movies-in-2023-ant-man-and-the-wasp-quantumania.jpg";
+      const imageSRC = imageSRC;
       const args = [
         title,
         year,
