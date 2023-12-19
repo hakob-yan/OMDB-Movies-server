@@ -6,6 +6,6 @@
 
 - order of above commands will lead you starting the server
 - db is combined with omdb api ,firstly it seeds  data from omdb api  for users
-- after that it every time checks if in db is any changes and then returns films
+- after that it every time checks if in db there are any changes and then returns films
 - this aproach allows to have all films and also edit/delete it for specific user , 
 -  !!!!!!!!!!!!!!!!!!enjoy it!!!!!!!!!!!!!
