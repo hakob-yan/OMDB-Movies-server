@@ -32,12 +32,13 @@ module.exports = {
       );
       const dbMoviesRows = dbMovies.rows || [];
       if (dbMoviesRows.length) {
-        const finalMoviedata = modifiedMovies.filter((movie) => {
-          return !dbMoviesRows.some(
-            (el) => el.imdb_id === movie.imdb_id && el.is_deleted === true
+        const finalMoviedata = modifiedMovies.map((movie) => {
+          const dbMovie = dbMoviesRows.find(
+            (el) => el.imdb_id === movie.imdb_id
           );
+          return dbMovie ? dbMovie : movie;
         });
-        res.status(200).send(finalMoviedata);
+        res.status(200).send(finalMoviedata.filter((el) => !el.is_deleted));
       } else {
         res.status(200).send(modifiedMovies);
       }
