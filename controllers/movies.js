@@ -49,11 +49,20 @@ module.exports = {
   },
   getMovieById: async (req, res) => {
     try {
+      const userId = req.headers.authorization || "";
       const { movieId } = req.params;
-      const foundMovie = await omdb.getMovieById(movieId || "");
-      res
-        .status(200)
-        .send(foundMovie ? modifyFoundMovie(foundMovie) : foundMovie);
+      const userMovie = await pool.query(
+        "SELECT * FROM movies WHERE user_id = $1 AND imdb_id = $2",
+        [userId, movieId]
+      );
+      if (userMovie.rows[0]) {
+        res.status(200).send(userMovie.rows[0]);
+      } else {
+        const foundMovie = await omdb.getMovieById(movieId || "");
+        res
+          .status(200)
+          .send(foundMovie ? modifyFoundMovie(foundMovie) : foundMovie);
+      }
     } catch (error) {
       console.log(error);
       res.sendStatus(500);
