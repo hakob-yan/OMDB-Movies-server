@@ -168,7 +168,6 @@ module.exports = {
     try {
       const userId = req.headers.authorization || "";
       const { title, year, runtime, genre, director } = req.body;
-      const imageSRC = imageSRC;
       const args = [
         title,
         year,
