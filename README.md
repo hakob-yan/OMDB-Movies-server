@@ -1,7 +1,7 @@
 - create db and name it 'movies_omdb_app'
 - npm i ;
 - npm run migrate;
-- npm run seeed ;
+- npm run seed ;
 - npm run dev;
 
 - order of above commands will lead you starting the server
